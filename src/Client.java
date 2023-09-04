@@ -8,13 +8,13 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Server extends JFrame implements ActionListener {
+public class Client extends JFrame implements ActionListener {
 
     JTextField textField;
     JPanel a1;
     Box vertical = Box.createVerticalBox();
 
-    Server() {
+    Client() {
         setLayout(null);
 
         JPanel jPanel = new JPanel();
@@ -37,14 +37,14 @@ public class Server extends JFrame implements ActionListener {
             }
         });
 
-        ImageIcon icon2 = new ImageIcon(ClassLoader.getSystemResource("images/myProfile.jpg"));
+        ImageIcon icon2 = new ImageIcon(ClassLoader.getSystemResource("images/4x3.jpg"));
         Image image2 = icon2.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         ImageIcon imageIcon2 = new ImageIcon(image2);
         JLabel profile = new JLabel(imageIcon2);
         profile.setBounds(40, 10, 50, 50);
         jPanel.add(profile);
 //28
-        JLabel name = new JLabel("Aghasaf");
+        JLabel name = new JLabel("Maharramov");
         name.setBounds(110, 15, 200, 25);
         name.setForeground(Color.WHITE);
         name.setFont(new Font("SAN_SERIF", Font.BOLD, 18));
@@ -74,7 +74,7 @@ public class Server extends JFrame implements ActionListener {
         add(send);
 
         setSize(450, 700);
-        setLocation(200, 50);
+        setLocation(800, 50);
         setUndecorated(true);
         getContentPane().setBackground(Color.WHITE);
 
@@ -128,6 +128,6 @@ public class Server extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new Server();
+        new Client();
     }
 }
