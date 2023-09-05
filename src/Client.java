@@ -5,23 +5,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Client extends JFrame implements ActionListener {
+public class Client implements ActionListener {
 
     JTextField textField;
-    JPanel a1;
-    Box vertical = Box.createVerticalBox();
+    static JPanel a1;
+    static Box vertical = Box.createVerticalBox();
+    static JFrame frame = new JFrame();
+    static DataOutputStream dataOutputStream;
 
     Client() {
-        setLayout(null);
+        frame.setLayout(null);
 
         JPanel jPanel = new JPanel();
         jPanel.setBackground(Color.CYAN);
         jPanel.setBounds(0, 0, 450, 70);
         jPanel.setLayout(null);
-        add(jPanel);
+        frame.add(jPanel);
 
         ImageIcon icon1 = new ImageIcon(ClassLoader.getSystemResource("images/back.png"));
         Image image1 = icon1.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT);
@@ -58,12 +64,12 @@ public class Client extends JFrame implements ActionListener {
 
         a1 = new JPanel();
         a1.setBounds(5, 75, 440, 570);
-        add(a1);
+        frame.add(a1);
 
         textField = new JTextField();
         textField.setBounds(5, 655, 310, 40);
         textField.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
-        add(textField);
+        frame.add(textField);
 
         JButton send = new JButton("Send");
         send.setBounds(320, 655, 123, 40);
@@ -71,14 +77,14 @@ public class Client extends JFrame implements ActionListener {
         send.setForeground(Color.WHITE);
         send.addActionListener(this);
         textField.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
-        add(send);
+        frame.add(send);
 
-        setSize(450, 700);
-        setLocation(800, 50);
-        setUndecorated(true);
-        getContentPane().setBackground(Color.WHITE);
+        frame.setSize(450, 700);
+        frame.setLocation(800, 50);
+        frame.setUndecorated(true);
+        frame.getContentPane().setBackground(Color.WHITE);
 
-        setVisible(true);
+        frame.setVisible(true);
     }
 
     @Override
@@ -97,11 +103,17 @@ public class Client extends JFrame implements ActionListener {
 
         a1.add(vertical, BorderLayout.PAGE_START);
 
+        try {
+            dataOutputStream.writeUTF(out);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
         textField.setText("");
 
-        repaint();
-        invalidate();
-        validate();
+        frame.repaint();
+        frame.invalidate();
+        frame.validate();
     }
 
     public static JPanel formatLabel(String out) {
@@ -129,5 +141,26 @@ public class Client extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new Client();
+
+        try {
+            Socket socket = new Socket("127.0.0.1", 6001);
+            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+            while (true) {
+                a1.setLayout(new BorderLayout());
+                String message = dataInputStream.readUTF();
+                JPanel panel = formatLabel(message);
+
+                JPanel left = new JPanel(new BorderLayout());
+                left.add(panel, BorderLayout.LINE_START);
+                vertical.add(left);
+                vertical.add(Box.createVerticalStrut(15));
+                a1.add(vertical, BorderLayout.PAGE_START);
+                frame.validate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
