@@ -25,7 +25,7 @@ public class Client implements ActionListener {
 
         JPanel jPanel = new JPanel();
         jPanel.setBackground(Color.CYAN);
-        jPanel.setBounds(0, 0, 450, 70);
+        jPanel.setBounds(0, 0, 600, 70);
         jPanel.setLayout(null);
         frame.add(jPanel);
 
@@ -49,8 +49,8 @@ public class Client implements ActionListener {
         JLabel profile = new JLabel(imageIcon2);
         profile.setBounds(40, 10, 50, 50);
         jPanel.add(profile);
-//28
-        JLabel name = new JLabel("Maharramov");
+
+        JLabel name = new JLabel("Ramal Maharramov");
         name.setBounds(110, 15, 200, 25);
         name.setForeground(Color.WHITE);
         name.setFont(new Font("SAN_SERIF", Font.BOLD, 18));
@@ -63,26 +63,27 @@ public class Client implements ActionListener {
         jPanel.add(status);
 
         a1 = new JPanel();
-        a1.setBounds(5, 75, 440, 570);
+        a1.setBounds(10, 75, 580, 570);
         frame.add(a1);
 
         textField = new JTextField();
-        textField.setBounds(5, 655, 310, 40);
+        textField.setBounds(10, 655, 460, 40);
         textField.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
         frame.add(textField);
 
         JButton send = new JButton("Send");
-        send.setBounds(320, 655, 123, 40);
+        send.setBounds(470, 655, 120, 40);
         send.setBackground(Color.CYAN);
         send.setForeground(Color.WHITE);
         send.addActionListener(this);
+        send.setFont(new Font("SAN_SERIF", Font.PLAIN, 24));
         textField.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
         frame.add(send);
 
-        frame.setSize(450, 700);
+        frame.setSize(600, 700);
         frame.setLocation(800, 50);
         frame.setUndecorated(true);
-        frame.getContentPane().setBackground(Color.WHITE);
+        frame.getContentPane().setBackground(new Color(97, 93, 93));
 
         frame.setVisible(true);
     }
